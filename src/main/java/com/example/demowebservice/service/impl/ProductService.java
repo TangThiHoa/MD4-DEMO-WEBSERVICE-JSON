@@ -38,4 +38,9 @@ public class ProductService implements IProductService {
     public Iterable<Product> findAllByOrderByPrice() {
         return productRepository.findAllByOrderByPrice();
     }
+
+    @Override
+    public Iterable<Product> findAllByPriceBetween(int from, int to) {
+        return productRepository.findAllByPriceBetween(from, to);
+    }
 }

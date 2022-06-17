@@ -27,5 +27,8 @@ public class ProductController {
     public ResponseEntity<Iterable<Product>> findAllByOrderByPrice(){
         return new ResponseEntity<>(productService.findAllByOrderByPrice(), HttpStatus.OK);
     }
-
+    @GetMapping("/price/between")
+    public ResponseEntity<Iterable<Product>>findAllByPriceBetween(@RequestParam int from,@RequestParam int to){
+        return new ResponseEntity<>(productService.findAllByPriceBetween(from, to), HttpStatus.OK);
+    }
 }

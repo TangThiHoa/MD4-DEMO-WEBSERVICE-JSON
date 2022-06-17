@@ -19,44 +19,68 @@
 <button onclick="findAll()">Hiện dữ liệu</button>
 <button onclick="findAllByOrderByPrice()">Hiện dữ liệu sắp xếp theo giá</button>
 <button onclick="showAddForm()">Thêm mới</button>
+<hr>
+<input type="text" id="from">
+<input type="text" id="to">
+<button onclick="findByPriceBetween()">Find</button>
 <div id="display"></div>
 
 <script>
     let show = document.getElementById("display");
 
     function findAll() {
-        let str = ""
+        // let str = ""
         $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
             type: "GET",
             url: "http://localhost:8080/products",
-            success: function (data) {                                //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
-                console.log(data)
-                let str = "";
-                for (let i = 0; i < data.length; i++) {
-                    str += "<h3>" + data[i].name + "," + data[i].price + "</h3>"
-                }
-                show.innerHTML = str;
+            success: function (data) {            //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
+                // console.log(data)
+                // let str = "";
+                // for (let i = 0; i < data.length; i++) {
+                //     str += "<h3>" + data[i].name + "," + data[i].price + "</h3>"
+                // }
+                // show.innerHTML = str;
+                display(data) //vì từ dòng 33-38: bị lặp lại nhiều lần phía dưới nên ta tạo riêng hàm chung là dislpay(dòng 65) để gọi
             }, error: function (error) {
                 console.log(error);
             }
         })
     }
-    function findAllByOrderByPrice() {
-        let str = ""
+    function findByPriceBetween() {
+        let from = document.getElementById("from").value
+        let to = document.getElementById("to").value
         $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
             type: "GET",
-            url: "http://localhost:8080/products/order-by-price",
-            success: function (data) {                                //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
-                console.log(data)
-                let str = "";
-                for (let i = 0; i < data.length; i++) {
-                    str += "<h3>" + data[i].name + "," + data[i].price + "</h3>"
-                }
-                show.innerHTML = str;
+            url: "http://localhost:8080/products/price/between?from="+from+"&to="+to,
+            success: function (data) {   //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
+                display(data)   //tránh lặp lại hàm trên  nên ta tạo riêng hàm chung là dislpay(dòng 65) để gọi
             }, error: function (error) {
                 console.log(error);
             }
         })
+
+    }
+
+    function findAllByOrderByPrice() {
+        // let str = ""
+        $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
+            type: "GET",
+            url: "http://localhost:8080/products/order-by-price",
+            success: function (data) {   //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
+                display(data)   //tránh lặp lại hàm trên  nên ta tạo riêng hàm chung là dislpay(dòng 65) để gọi
+            }, error: function (error) {
+                console.log(error);
+            }
+        })
+
+    }
+    function display(data) {                      //hàm chung
+        let str = "";
+        console.log(data)
+        for (let i = 0; i < data.length; i++) {
+            str += "<h3>" + data[i].name + "," + data[i].price + "</h3>"
+        }
+        show.innerHTML = str;
 
     }
 
