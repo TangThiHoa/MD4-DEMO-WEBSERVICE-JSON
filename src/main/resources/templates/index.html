@@ -17,6 +17,7 @@
 <body>
 <h1>Danh sách sản phẩm </h1>
 <button onclick="findAll()">Hiện dữ liệu</button>
+<button onclick="findAllByOrderByPrice()">Hiện dữ liệu sắp xếp theo giá</button>
 <button onclick="showAddForm()">Thêm mới</button>
 <div id="display"></div>
 
@@ -39,6 +40,24 @@
                 console.log(error);
             }
         })
+    }
+    function findAllByOrderByPrice() {
+        let str = ""
+        $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
+            type: "GET",
+            url: "http://localhost:8080/products/order-by-price",
+            success: function (data) {                                //data là dữ liệu mình gửi sang , nó tự gộp , tự chuyển thành data
+                console.log(data)
+                let str = "";
+                for (let i = 0; i < data.length; i++) {
+                    str += "<h3>" + data[i].name + "," + data[i].price + "</h3>"
+                }
+                show.innerHTML = str;
+            }, error: function (error) {
+                console.log(error);
+            }
+        })
+
     }
 
     function showAddForm() {
