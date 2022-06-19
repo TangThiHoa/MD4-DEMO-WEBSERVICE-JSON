@@ -12,7 +12,7 @@ public class CategoryService implements ICategoryService {
     @Autowired
     CategoryRepository categoryRepository;
     @Override
-    public void sava(Category category) {
+    public void save(Category category) {
         categoryRepository.save(category);
 
     }

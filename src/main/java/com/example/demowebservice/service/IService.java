@@ -3,7 +3,7 @@ package com.example.demowebservice.service;
 import java.util.Optional;
 
 public interface IService<T> {
-    void sava(T t);
+    void save(T t);
 
     Iterable<T> findAll();
 

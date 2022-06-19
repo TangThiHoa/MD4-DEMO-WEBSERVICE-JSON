@@ -19,6 +19,7 @@
 <button onclick="findAll()">Hiện dữ liệu</button>
 <button onclick="findAllByOrderByPrice()">Hiện dữ liệu sắp xếp theo giá</button>
 <button onclick="showAddForm()">Thêm mới</button>
+<button onclick="edit()">Sửa</button>
 <hr>
 <input type="text" id="from">
 <input type="text" id="to">
@@ -27,7 +28,6 @@
 
 <script>
     let show = document.getElementById("display");
-
     function findAll() {
         // let str = ""
         $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
@@ -60,7 +60,6 @@
         })
 
     }
-
     function findAllByOrderByPrice() {
         // let str = ""
         $.ajax({                          // $.ajax()là hàm nhỏ của jQuerry // $ : coi như trang html hiện tại
@@ -83,7 +82,6 @@
         show.innerHTML = str;
 
     }
-
     function showAddForm() {
         let str = "\n" +
             "<input type=\"text\" id=\"name\">\n" +
@@ -92,7 +90,6 @@
             "<button onclick='save()'>Thêm</button>"
         show.innerHTML = str;
     }
-
     function save() {
         let name = document.getElementById("name").value;
         let price = document.getElementById("price").value;
@@ -122,7 +119,36 @@
             }
         })
     }
+    function edit() {
+        let name = document.getElementById("name").value;
+        let price = document.getElementById("price").value;
+        let categoryId = document.getElementById("category").value;
+        let pro = {
+            name: name,             //name trước: là tên thuộc tính của đtượng pro , sau :là giá trị được lấy ở trên
+            price: price,
+            category: {
+                id: categoryId
+            }
+        }
 
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            type: 'POST',
+            url: 'http://localhost:8080/products/{id}',
+            data: JSON.stringify(pro),   //chuyển kiểu dữ liệu js thành dạng JSON
+            success: function () {
+                display(data)              //  thay vì hiển thị thông báo alert("Thành công ") thì ta hiển thị luôn ds
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+
+    }
 
 </script>
 </body>

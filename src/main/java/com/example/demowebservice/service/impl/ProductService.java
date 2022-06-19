@@ -13,7 +13,7 @@ public class ProductService implements IProductService {
     @Autowired
     ProductRepository productRepository;
     @Override
-    public void sava(Product product) {
+    public void save(Product product) {
         productRepository.save(product);
 
     }
